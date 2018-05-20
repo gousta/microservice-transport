@@ -1,0 +1,14 @@
+version: "3"
+
+volumes:
+  mongodb-data:
+    driver: local
+
+services:
+  mongo:
+    container_name: transport-mongo
+    image: mongo:latest
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - 21234:27017
