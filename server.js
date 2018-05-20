@@ -22,7 +22,8 @@ const apiWorker = (worker) => {
 
   const app = express();
 
-  app.use(middleware.requestLogger);
+  app.use(middleware.logger);
+  app.use(middleware.authenticator);
   app.use(bodyParser.json());
   app.use(cors());
 
