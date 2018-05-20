@@ -18,14 +18,13 @@ const configuration = {
 }
 
 const apiWorker = (worker) => {
-  var app = express();
+  mongoose.connect(configuration.mongoConnectionString);
+
+  const app = express();
 
   app.use(middleware.requestLogger);
   app.use(bodyParser.json());
   app.use(cors());
-
-
-  mongoose.connect(configuration.mongoConnectionString);
 
   require('./app/http/routes')(app);
 
