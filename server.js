@@ -3,7 +3,7 @@ const cluster = require('express-cluster');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const CPUamount = require('os').cpus().length;
+const os = require('os');
 
 const middleware = require('./app/http/middleware');
 
@@ -11,7 +11,7 @@ const configuration = {
   port: 3000,
   mongoConnectionString: 'mongodb://127.0.0.1:21234/transport',
   cluster: {
-    count: CPUamount,
+    count: os.cpus().length,
     respawn: true,
     verbose: true,
   }
