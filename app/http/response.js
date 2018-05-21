@@ -6,10 +6,10 @@ exports.success = (data) => {
   }
 }
 
-exports.error = (code, data) => {
+exports.error = (errorObject) => {
   return {
     status: 'error',
-    error_code: code,
-    data: data
+    error: errorObject,
+    data: null
   }
 }
