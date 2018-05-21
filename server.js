@@ -1,11 +1,11 @@
-const express = require('express');
-const cluster = require('express-cluster');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const os = require('os');
+const express = require('express')
+const cluster = require('express-cluster')
+const cors = require('cors')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const os = require('os')
 
-const middleware = require('./app/http/middleware');
+const middleware = require('./app/http/middleware')
 
 const configuration = {
   port: 3000,
@@ -18,18 +18,27 @@ const configuration = {
 }
 
 const apiWorker = (worker) => {
-  mongoose.connect(configuration.mongoConnectionString);
+  console.log(`Worker started on pid ${worker.process.pid} (${worker.id})`)
 
-  const app = express();
+  mongoose
+    .connect(configuration.mongoConnectionString)
+    .then(() => {
+      console.log('mongoose connected successfully')
+    })
+    .catch((err) => {
+      console.error('mongoose connection error', err)
+    })
 
-  app.use(middleware.logger);
-  app.use(middleware.authenticator);
-  app.use(bodyParser.json());
-  app.use(cors());
+  const app = express()
 
-  require('./app/http/routes')(app);
+  app.use(middleware.logger)
+  app.use(middleware.authenticator)
+  app.use(bodyParser.json())
+  app.use(cors())
 
-  return app.listen(configuration.port);
+  require('./app/http/routes')(app)
+
+  return app.listen(configuration.port)
 }
 
 cluster(apiWorker, configuration.cluster)
