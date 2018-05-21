@@ -1,33 +1,31 @@
-const mongoose = require('mongoose');
-const { transports } = require('../../transports/kernel');
+const mongoose = require('mongoose')
+const { transports } = require('../../transports/kernel')
 
 // Schema
 var TransactionSchema = mongoose.Schema({
   transport: {
     type: String,
-    required: [true, 'transport is not defined']
+    lowercase: true,
+    required: () => {
+      return transports.indexOf(this.transport) > -1
+    },
   },
   from: String,
   to: String,
   text: String,
-  tag: String,
-  urgent: Boolean,
+  tag: {
+    type: String,
+    lowercase: true,
+  },
+  urgent: {
+    type: Boolean,
+    default: false,
+  },
   created: {
     type: Date,
     default: Date.now
   },
-});
-
-// Methods
-TransactionSchema.methods.isValid = () => {
-  console.log('isValid', this);
-  console.log(transports.indexOf(this.transport), this.transport);
-  if(transports.indexOf(this.transport) !== -1) {
-    return false;
-  }
-
-  return true;
-}
+})
 
 // Export
-module.exports = mongoose.model('Transaction', TransactionSchema);
+module.exports = mongoose.model('Transaction', TransactionSchema)
