@@ -14,7 +14,7 @@ var TransactionSchema = mongoose.Schema({
     index: true,
     lowercase: true,
     required: false,
-    default: 'queue',
+    default: 'waiting',
   },
   from: {
     type: String,
@@ -30,12 +30,18 @@ var TransactionSchema = mongoose.Schema({
   },
   tag: {
     type: String,
+    default: null,
     lowercase: true,
     required: false,
   },
   urgent: {
     type: Boolean,
     default: false,
+    required: false,
+  },
+  queued: {
+    type: Number,
+    default: null,
     required: false,
   },
   created: {
