@@ -1,5 +1,5 @@
 
-exports.supported = [
+exports.transportsSupported = [
   'test',
   'email',
   'sms',
