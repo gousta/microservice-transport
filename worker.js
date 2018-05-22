@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const moment = require('moment')
 const mongoose = require('mongoose')
 const configuration = require('./config')
@@ -33,7 +35,7 @@ const work = () => {
     })
     .then(() => {
       setTimeout(work, 3000)
-    });
+    })
 
 }
 
