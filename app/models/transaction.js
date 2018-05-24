@@ -1,20 +1,19 @@
+
 const mongoose = require('mongoose')
-const { transportsSupported } = require('../../transports/kernel')
+const TransportEngine = require('../../transports/engine')
 
 // Schema
 var TransactionSchema = mongoose.Schema({
+  signature: {
+    type: String,
+    default: TransportEngine
+      .signature(this.transport+this.from+this.to+this.text+this.tag)
+  },
   transport: {
     type: String,
     lowercase: true,
     required: true,
-    enum: transportsSupported,
-  },
-  status: {
-    type: String,
-    index: true,
-    lowercase: true,
-    required: false,
-    default: 'waiting',
+    enum: TransportEngine.supported,
   },
   from: {
     type: String,

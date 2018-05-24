@@ -15,12 +15,11 @@ mongoose
   })
 
 const selectJob = {
-  status: 'waiting',
+  queued: null,
 }
 
 const updateJob = {
   $set: {
-    status: 'queued',
     queued: moment().unix(),
   }
 }

@@ -8,7 +8,13 @@ const bodyParser = require('body-parser')
 
 const configuration = require('./config')
 const middleware = require('./app/http/middleware')
+const queue = require('./app/queue/engine');
 
+global.queue = queue
+
+if(cluster.isMaster) {
+  setInterval(queue.process, 5000)
+}
 
 const apiWorker = (worker) => {
   mongoose
@@ -25,6 +31,7 @@ const apiWorker = (worker) => {
       require('./app/http/routes')(app)
     
       app.listen(configuration.port)
+      
     })
     .catch((err) => {
       console.error('mongoose connection error', err.message)
