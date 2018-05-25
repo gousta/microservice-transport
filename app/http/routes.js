@@ -11,17 +11,22 @@ module.exports = (app, queue) => {
   
   app.post('/transaction', (req, res) => {
     const signature = TransportEngine.signature(req.body)
+    
+    if(!queue.has(signature)) {
+      Transaction
+        .findOne({ signature: req.params.signature })
+        .then((t) => {
+          console.log('transaction lookup', t);
+          if(!t) queue.push(new Transaction(req.body))
+        })
+    }
 
     res.json(response.success(signature))
-
-    if(queue.isUnique(signature)) {
-      queue.push(signature, new Transaction(req.body))
-    }
   })
 
-  app.get('/transaction/:identity', (req, res) => {
+  app.get('/transaction/:signature', (req, res) => {
     Transaction
-      .findOne({ _id: req.params.identity })
+      .findOne({ signature: req.params.signature })
       .then((t) => res.json(response.success(t)))
       .catch((e) => res.json(response.error(e)))
   })

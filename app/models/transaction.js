@@ -6,6 +6,7 @@ const TransportEngine = require('../../transports/engine')
 var TransactionSchema = mongoose.Schema({
   signature: {
     type: String,
+    index: true,
     default: () => TransportEngine.signature(this)
   },
   transport: {

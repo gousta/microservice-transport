@@ -1,18 +1,27 @@
 const _ = require('lodash')
+const Transaction = require('../models/transaction')
 
-let queue = {}
+let queue = []
 
-exports.push = (key, data) => {
-  queue[key] = data
-  return queue[key]
+exports.push = (data) => {
+  queue.push(data)
 }
 
-exports.isUnique = (key) => {
-  return queue[key] ? false : true
+exports.has = (key) => {
+  return queue.findIndex((x) => x.signature === key) !== -1
 }
 
 exports.process = () => {
-  // transaction.save().catch((e) => console.error(e))
-  console.log('queue.process()', _.size(queue))
-  
+  // transaction
+  console.log('queue.process()')
+
+  const pull50 = _.pullAt(queue, [0, 50]);
+
+  Transaction
+    .insertMany(pull50)
+    .then((res) => {
+      console.log('insertMany', res);
+    })
+
+  queue = [];
 }
