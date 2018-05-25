@@ -6,8 +6,7 @@ const TransportEngine = require('../../transports/engine')
 var TransactionSchema = mongoose.Schema({
   signature: {
     type: String,
-    default: TransportEngine
-      .signature(this.transport+this.from+this.to+this.text+this.tag)
+    default: () => TransportEngine.signature(this)
   },
   transport: {
     type: String,
@@ -50,5 +49,5 @@ var TransactionSchema = mongoose.Schema({
   },
 })
 
-// Export
+// Exports
 module.exports = mongoose.model('Transaction', TransactionSchema)

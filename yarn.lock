@@ -122,9 +122,9 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
-express-cluster@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/express-cluster/-/express-cluster-0.0.5.tgz#516c881b2a8f5d73bf2e3bbc2ea9540678aadefc"
+express-cluster-stability@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/express-cluster-stability/-/express-cluster-stability-1.4.2.tgz#6edaa4de72044ea8a6c0667c7d601ca5a5220ccc"
 
 express@^4.16.3:
   version "4.16.3"
@@ -225,7 +225,7 @@ lodash.get@4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
 
-lodash@^4.14.0:
+lodash@^4.14.0, lodash@^4.17.10:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 

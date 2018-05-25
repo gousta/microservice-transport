@@ -9,10 +9,12 @@ exports.supported = [
 ]
 
 
-exports.signature = (input) => {
+exports.signature = (obj) => {
+  const string = String('@'+obj.transport+obj.from+obj.to+obj.text+obj.tag)
+  
   return crypto
     .createHash('md5')
-    .update(String('#' + input))
+    .update(string)
     .digest('hex')
 }
 

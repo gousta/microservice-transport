@@ -1,28 +1,22 @@
 const mongoose = require('mongoose');
 const Transaction = require('../models/transaction')
+const TransportEngine = require('../../transports/engine')
 const response = require('./response')
 
-const queue = global.queue
-
-module.exports = (app) => {
+module.exports = (app, queue) => {
 
   app.get('/', (req, res) => {
     res.json(response.success())
   })
   
   app.post('/transaction', (req, res) => {
-    const transaction = new Transaction(req.body);
+    const signature = TransportEngine.signature(req.body)
 
-    if(queue.isUnique(transaction.signature)) {
-      // Add to queue
-      queue.push(transaction.signature, transaction);
+    res.json(response.success(signature))
+
+    if(queue.isUnique(signature)) {
+      queue.push(signature, new Transaction(req.body))
     }
-
-    res.json(response.success(transaction));
-
-    console.log('ok now running this');
-    
-    transaction.save().catch((e) => console.error(e))
   })
 
   app.get('/transaction/:identity', (req, res) => {

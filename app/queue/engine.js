@@ -1,3 +1,4 @@
+const _ = require('lodash')
 
 let queue = {}
 
@@ -11,5 +12,7 @@ exports.isUnique = (key) => {
 }
 
 exports.process = () => {
-  console.log('queue.process()', queue)
+  // transaction.save().catch((e) => console.error(e))
+  console.log('queue.process()', _.size(queue))
+  
 }
