@@ -1,5 +1,6 @@
+const logger = require('../../app/logger')
 
 module.exports = () => {
-  console.log('transports/test/transport.js');
-  return true;
+  logger.log('transports/test/transport.js')
+  return true
 }
