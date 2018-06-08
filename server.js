@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const logger = require('./app/logger')
+const logger = require('./logger')
 const express = require('express')
 const clusterStability = require('express-cluster-stability')
 const cors = require('cors')

@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const logger = require('./app/logger')
+const logger = require('./logger')
 const moment = require('moment')
 const mongoose = require('mongoose')
 const configuration = require('./config')

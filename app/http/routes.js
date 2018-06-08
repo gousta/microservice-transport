@@ -1,34 +1,8 @@
-const Transaction = require('../models/transaction')
-const TransportEngine = require('../../transports/engine')
-const response = require('./response')
+const Controller = require('../Controller')
 
 module.exports = (app) => {
+  app.get('/', Controller.index)
 
-  app.get('/', (req, res) => {
-    res.json(response.success())
-  })
-
-  app.post('/transaction', (req, res) => {
-    const signature = TransportEngine.signature(req.body)
-
-    Transaction
-      .findOne({signature: signature})
-      .then((t) => {
-        if (!t) {
-          t = new Transaction(req.body)
-          t.save()
-        }
-
-        res.json(response.success(t))
-      })
-
-  })
-
-  app.get('/transaction/:signature', (req, res) => {
-    Transaction
-      .findOne({signature: req.params.signature})
-      .then((t) => res.json(response.success(t)))
-      .catch((e) => res.json(response.error(e)))
-  })
-
+  app.post('/transaction', Controller.newTransaction)
+  app.get('/transaction/:signature', Controller.getTransaction)
 }
