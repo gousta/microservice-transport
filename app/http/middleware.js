@@ -1,7 +1,7 @@
 const logger = require('../../logger')
 
 exports.logger = (req, res, next) => {
-  logger.log(req.method, req.originalUrl)
+  logger.info(`[${req.method}] ${req.originalUrl}`)
   next()
 }
 
